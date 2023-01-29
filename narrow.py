@@ -5,7 +5,7 @@ ia = Cinemagoer()
 df3 = pd.read_csv("movie_data.csv")
 
 def narrow(index,maturity,director_star):    
-    if df3.iloc[index,8] != maturity and df3.iloc[index,8] != "no":
+    if df3.iloc[index,8] != maturity and maturity != "no":
         return False
     director_star_list = director_star.split(', ')
     if director_star_list != [''] and director_star_list != ['no']:

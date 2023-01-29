@@ -57,7 +57,8 @@ def output_process():
         result = request.get_json()
         print("RETURNING")
         print("RESULT" + result)
-        user_data[question_names[question_index]] = result
+        if question_index <= len(question_names) - 1:
+            user_data[question_names[question_index]] = result
         print(user_data)
 
         result_list = result.split(',')
@@ -67,9 +68,9 @@ def output_process():
         #elif result[0] == "R":
            # prompt = "Feeling steemy, huh ?"
 
-        prompt = "I love" + result_list[0] + "movies"
+        prompt = "I love " + result_list[0] + " movies"
         if result[0] in ["G", "PG", "PG-13"]:
-            prompt = "I love" + result_list[0] + "rated movies for kids"
+            prompt = "I love " + result_list[0] + " rated movies for kids"
         if result[0] == "romance":
             prompt = "I love sweet and kind movies"
         if result[0] == "long":
@@ -96,7 +97,8 @@ def output_process():
         if result_list[0].lower() == "no":
             completion = "It's okay! I'm undecisive too sometimes \N{relieved face}"
         
-        if (len(user_data) == len(question_names)):
+        
+        if (len(user_data) == len(question_names)) and question_index == 7:
             movieURL, movieText = getMovie(user_data)
         else:
             movieURL = "none"
