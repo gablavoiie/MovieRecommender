@@ -6,8 +6,9 @@ app = Flask(__name__)
 with open('key.json') as json_file:
     data = json.load(json_file)
     openai.api_key=data["openAIKey"]
-user_data = []
+user_data = {}
 questions = [
+"Genre Preferences",
 
 "Think hard about the kind of movie you want to watch. Are there any movies that match the vibe?",
 
@@ -32,8 +33,11 @@ questions = [
 "This is it for me. Take care, ok? "
 ]
 question_index = 0
-question_names = ["similar_movies", "maturity", "genres", "decade", "lenght", "actor-director", "text-box", "number-of-movies"]
+question_names = ["genres", "similar_movies", "maturity", "decade", "lenght", "actor-director", "text-box", "number-of-movies"]
 #url, text
+
+def getMovie(user_data):
+    return "https://meanbusiness.com/wp-content/uploads/2018/04/PuppyEatingBanana.gif", "Fault in Our Stars"
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -45,17 +49,26 @@ def output_process():
         result = request.get_json()
         print("RETURNING")
         print("RESULT" + result)
-        
+        user_data[question_names[question_index]] = result
+        print(user_data)
+
         result_list = result.split(',')
 
-        if result[0] in ["G", "PG", "PG-13"]:
-            prompt = "I love" + result_list[0] + "rated movies for kids"
+        
+
         #elif result[0] == "R":
            # prompt = "Feeling steemy, huh ?"
 
         prompt = "I love" + result_list[0] + "movies"
+        if result[0] in ["G", "PG", "PG-13"]:
+            prompt = "I love" + result_list[0] + "rated movies for kids"
+        if result[0] == "romance":
+            prompt = "I love sweet and kind movies"
+        if result[0] == "long":
+            prompt = "I prefer three hour movies over 1 hour movies"
+
         completion = "?"
-        if question_index <=4:
+        if question_index <=5:
             while(("?" in completion)):
                 completions = openai.Completion.create(prompt=prompt,
                                            engine="text-davinci-002",
@@ -69,12 +82,18 @@ def output_process():
             completion = completion[pos:]
         else:
             completion = "none"
+        
+        if (len(user_data) >= len(question_names)):
+            movieURL, movieText = getMovie(user_data)
+        else:
+            movieURL = "none"
+            movieText = "none"
         question_index+=1
         
 
         #user_data.append(request.get_data())
     #results = {'processed': 'true'}
-    return jsonify({"nextQ": questions[question_index], "chatGPT": completion})
+    return jsonify({"nextQ": questions[question_index], "chatGPT": completion, "movieURL": movieURL, "movieText":movieText})
 
 if __name__ == "__main__":
   app.run(debug=True)

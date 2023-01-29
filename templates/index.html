@@ -46,13 +46,30 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
   // this is where you may want to connect this script to NLC backend.
   inputCallbackFn: function(o) {
     // add error conversation block & recall it if no answer matched
+    
+
     var miss = function(text) {
+      var img_string = "<img src=" + text["movieURL"] + " />"
+      console.log(img_string)
       if (text["chatGPT"] != "none") {
       chatWindow.talk(
         {
           "i-dont-get-it": {
             says: [
               text["chatGPT"],text["nextQ"]
+            ],
+            reply: o.convo[o.standingAnswer].reply
+          }
+        },
+        "i-dont-get-it"
+      )
+      }
+      else if ((text["movieURL"] != "none") && (text["movieText"] != "none")) {
+        chatWindow.talk(
+        {
+          "i-dont-get-it": {
+            says: [
+            text["nextQ"],text["movieText"],img_string
             ],
             reply: o.convo[o.standingAnswer].reply
           }
@@ -120,7 +137,7 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
 // "Basic chat-bubble Example" (1-basics.html)
 var convo = {
   ice: {
-    says: ["Hi! I’m Bred, or as they call me in the kitchen, the movie baker. I’m so excited to give you a movie as unique as you are. 🍞", "When listing your preferences, or breadcrumbs as I like to call them, please enter a comma-separated list. If you don’t have a preference, enter no🎥","Let’s start simple. Do you have any genre preferences?","If so, choose from the following: Action, Adventure, Animation, Biography, Comedy, Crime, Drama, Family, Fantasy, History, Horror, Music, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, Western"],
+    says: ["Hi! I’m Bred, or as they call me in the kitchen, the movie baker. I’m so excited to give you a movie as unique as you are. 🍞", "When listing your preferences, or breadcrumbs as I like to call them, please enter a comma-separated list. If you don’t have a preference, enter no.","Let’s start simple. Do you have any genre preferences?","If so, choose from the following: Action, Adventure, Biography, Comedy, Crime, Drama, Family, Fantasy, History, Horror, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, Western"],
     reply: [
         
     ]
