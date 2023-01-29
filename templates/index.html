@@ -47,6 +47,7 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
   inputCallbackFn: function(o) {
     // add error conversation block & recall it if no answer matched
     var miss = function(text) {
+      if (text["chatGPT"] != "none") {
       chatWindow.talk(
         {
           "i-dont-get-it": {
@@ -58,6 +59,20 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
         },
         "i-dont-get-it"
       )
+      }
+      else {
+        chatWindow.talk(
+        {
+          "i-dont-get-it": {
+            says: [
+              text["nextQ"]
+            ],
+            reply: o.convo[o.standingAnswer].reply
+          }
+        },
+        "i-dont-get-it"
+      )
+      }
     }
 
     // do this if answer found
