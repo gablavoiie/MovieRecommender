@@ -1,4 +1,4 @@
-# MovieRecommender
+# Movie Recommender
 
 We are tired of scrolling through Netflix aimlessly for hours on end hoping to come across a movie that interests us. While several movie recommendation systems exist out there, they are largely based on previously-collected data and are not equipped to process real-time parameters like current mood. We set out to create a comprehensive movie recommender that engages in an interactive conversation with the user to output the optimal movie suggestion.
 
