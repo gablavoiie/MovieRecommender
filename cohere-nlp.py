@@ -6,7 +6,7 @@ from cohere.classify import Example
 import csv
 import json
 
-#getting cohere key
+# getting cohere key
 
 with open("cohere-key.json") as json_file:
   data = json.load(json_file)
@@ -107,5 +107,3 @@ def get_tags(prompt):
       for i in range(4):
             output = output+sims[i][1]+","
       return(output[:-1])
-
-      
