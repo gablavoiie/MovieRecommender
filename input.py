@@ -7,7 +7,7 @@ import pandas
 ia = Cinemagoer()
 
 
-df = pandas.read_csv("movie_data_copy.csv")
+df = pandas.read_csv("movie_data.csv")
 
 def take_input(moviedict):
     moremovies = False
