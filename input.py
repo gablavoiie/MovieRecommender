@@ -7,7 +7,7 @@ import pandas
 ia = Cinemagoer()
 
 
-df = pandas.read_csv("movie_data.csv")
+df = pandas.read_csv("movie_data_copy.csv")
 
 def take_input(moviedict):
     moremovies = False
@@ -55,11 +55,13 @@ def take_input(moviedict):
     
     listofsimilarities = []
     for index in range(1000):
-        listofsimilarities.append(calculate_score(df.loc[index,"Vector"], vector))
-        print(df.loc[index,"Titles"])
+        listofsimilarities.append((calculate_score(df.loc[index,"Vector"], vector),df.loc[index,"Titles"]))
         
-    listofsimilarities.sort(reverse=True)
-    print(listofsimilarities)
+        
+        
+    listofsimilarities.sort(key = lambda x: x[0],reverse=True)
+    
+    return(listofsimilarities[0][1])
         
 def nlp(text):
     taglist = ['absurd', 'action', 'adult comedy', 'allegory', 'alternate history', 'alternate reality', 'anti war', 'atmospheric', 'autobiographical', 'avant garde', 'blaxploitation', 'bleak', 'boring', 'brainwashing', 'claustrophobic', 'clever', 'comedy', 'comic', 'cruelty', 'cult', 'cute', 'dark', 'depressing', 'dramatic', 'entertaining', 'fantasy', 'feel-good', 'flashback', 'good versus evil', 'gothic', 'haunting', 'historical', 'historical fiction', 'home movie', 'horror', 'humor', 'insanity', 'inspiring', 'intrigue', 'magical realism', 'melodrama', 'murder', 'mystery', 'neo noir', 'non fiction', 'paranormal', 'philosophical', 'plot twist', 'pornographic', 'prank', 'psychedelic', 'psychological', 'queer', 'realism', 'revenge', 'romantic', 'sadist', 'satire', 'sci-fi', 'sentimental', 'storytelling', 'stupid', 'suicidal', 'suspenseful', 'thought-provoking', 'tragedy', 'violence', 'western', 'whimsical']
@@ -73,5 +75,3 @@ def nlp(text):
 
 
 
-dd = {"similar_movies": "lala", "genres": "Comedy , horror,adventure", "decade": "1956", "textbox": "im feeling so happy", "length": "long"}
-take_input(dd)
