@@ -1,9 +1,8 @@
-
 import pandas
 import numpy as np
-#this script is run on a constrained frame, with only the requested pg 13 
 
-    
+# this script is run on a constrained frame
+
 def calculate_similarity(a, b):
       return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
@@ -11,13 +10,10 @@ df = pandas.read_csv("movie_data.csv")
 def strtovector(uservector):
     lista = []
 
-
     lista.append(int(uservector[1]))
    
-
     lista.append(int(uservector[4]))
    
-
     listagenre = []
     for i in range(8,68,3):
         listagenre.append(int(uservector[i]))
@@ -50,10 +46,5 @@ def calculate_score(movievector,uservector):
         vb.append(p)
     for q in uservector[3]:
         vb.append(q)
-
-    
     
     return(calculate_similarity(va,vb))
-
-
-

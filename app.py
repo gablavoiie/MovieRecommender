@@ -3,6 +3,9 @@ import spacy
 from profanity_filter import ProfanityFilter
 import json
 import openai
+import cinema
+import image
+#from image import *
 app = Flask(__name__)
 
 with open('key.json') as json_file:
@@ -33,13 +36,16 @@ questions = [
 "This is it for me. Take care, ok? "
 ]
 question_index = 0
-question_names = ["genres", "similar_movies", "maturity", "decade", "lenght", "actor-director", "text-box"]
+question_names = ["genres", "similar_movies", "maturity", "decade", "length", "actor-director", "textbox"]
 #url, text
 nlp = spacy.load("en_core_web_sm")
 profanity_filter = ProfanityFilter(nlps={'en': nlp})  # reuse spacy Language (optional)
 nlp.add_pipe(profanity_filter.spacy_component, last=True)
+
 def getMovie(user_data):
-    return "https://meanbusiness.com/wp-content/uploads/2018/04/PuppyEatingBanana.gif", "Fault in Our Stars"
+    title = cinema.take_input(user_data)
+    url = image.image_url(title)
+    return url, title
 @app.route("/")
 def home():
     return render_template("index.html")
