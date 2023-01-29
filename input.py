@@ -2,6 +2,7 @@ from imdb import Cinemagoer
 from coding import *
 from coherenlp import *
 from vector_score import *
+from narrow import *
 import pandas
 
 ia = Cinemagoer()
@@ -55,7 +56,8 @@ def take_input(moviedict):
     
     listofsimilarities = []
     for index in range(1000):
-        listofsimilarities.append((calculate_score(df.loc[index,"Vector"], vector),df.loc[index,"Titles"]))
+        if narrow(index,moviedict["maturity"],moviedict["actor-director"]):
+            listofsimilarities.append((calculate_score(df.loc[index,"Vector"], vector),df.loc[index,"Titles"]))
         
         
         
@@ -72,6 +74,5 @@ def nlp(text):
         if value in t:
             tag_vector[index] = 1
     return(g,tag_vector)
-
 
 
