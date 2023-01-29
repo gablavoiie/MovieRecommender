@@ -40,7 +40,7 @@ def output_process():
         question_index+=1
         #user_data.append(request.get_data())
     #results = {'processed': 'true'}
-    return jsonify(questions[question_index])
+    return jsonify({"nextQ": questions[question_index], "chatGPT": "hello"})
 
 if __name__ == "__main__":
   app.run(debug=True)
