@@ -17,7 +17,9 @@ questions = [
 
 "How much time do we have on our hands? Do you want to watch a short, medium or long movie?",
 
-"Anything else we should consider? The floor is yours. Think emotions, settings, tropes, plots, etc. ",
+"Feeling starstruck? Any actors or directors you wish to see?",
+
+"Anything else we should consider? The floor is yours. Think emotions, settings, tropes, plots, etc.",
 
 "If you want more than one movie recommended, how many?",
 
@@ -30,7 +32,8 @@ questions = [
 "This is it for me. Take care, ok? "
 ]
 question_index = 0
-question_names = ["similar_movies", "genres", "decade", "maturity", "lenght"]
+question_names = ["similar_movies", "maturity", "genres", "decade", "lenght", "actor-director", "text-box", "number-of-movies"]
+#url, text
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -42,15 +45,32 @@ def output_process():
         result = request.get_json()
         print("RETURNING")
         print("RESULT" + result)
-        question_index+=1
+        
         result_list = result.split(',')
+
+        if result[0] in ["G", "PG", "PG-13"]:
+            prompt = "I love" + result_list[0] + "rated movies for kids"
+        #elif result[0] == "R":
+           # prompt = "Feeling steemy, huh ?"
+
         prompt = "I love" + result_list[0] + "movies"
         completion = "?"
-        while("?" in completion):
-            completions = openai.Completion.create(prompt=prompt,
+        if question_index <=4:
+            while(("?" in completion)):
+                completions = openai.Completion.create(prompt=prompt,
                                            engine="text-davinci-002",
                                            max_tokens=100)
-            completion = completions.choices[0].text
+                completion = completions.choices[0].text
+            pos = 0
+            for i in range(len(completion)):
+                if completion[i].isupper():
+                    pos = i
+                    break
+            completion = completion[pos:]
+        else:
+            completion = "none"
+        question_index+=1
+        
 
         #user_data.append(request.get_data())
     #results = {'processed': 'true'}
