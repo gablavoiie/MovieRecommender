@@ -51,7 +51,7 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
         {
           "i-dont-get-it": {
             says: [
-              text["nextQ"],text["chatGPT"]
+              text["chatGPT"],text["nextQ"]
             ],
             reply: o.convo[o.standingAnswer].reply
           }
@@ -86,7 +86,7 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
     $.ajax({
 	    type : "POST",
 	    url : '/output_process',
-	    data: JSON.stringify("DATA FROM JAVASCRIPT"),
+	    data: JSON.stringify(o.input),
 	    contentType: 'application/json',
         dataType: "json",
 	    success: function (result) {

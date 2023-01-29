@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, jsonify
+import json
+import openai
 app = Flask(__name__)
 
+with open('key.json') as json_file:
+    data = json.load(json_file)
+    openai.api_key=data["openAIKey"]
 user_data = []
 questions = [
 
@@ -38,9 +43,18 @@ def output_process():
         print("RETURNING")
         print("RESULT" + result)
         question_index+=1
+        result_list = result.split(',')
+        prompt = "I love" + result_list[0] + "movies"
+        completion = "?"
+        while("?" in completion):
+            completions = openai.Completion.create(prompt=prompt,
+                                           engine="text-davinci-002",
+                                           max_tokens=100)
+            completion = completions.choices[0].text
+
         #user_data.append(request.get_data())
     #results = {'processed': 'true'}
-    return jsonify({"nextQ": questions[question_index], "chatGPT": "hello"})
+    return jsonify({"nextQ": questions[question_index], "chatGPT": completion})
 
 if __name__ == "__main__":
   app.run(debug=True)
