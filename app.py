@@ -17,23 +17,23 @@ questions = [
 
 "Think hard about the kind of movie you want to watch \N{thinking face}. Are there any movies that match the vibe?",
 
-"What’s the audience for tonight? Choose a rating from the following: G, PG, PG-13, R.",
+"What’s the audience for tonight? \N{movie camera} Choose a rating from the following: G, PG, PG-13, R.",
 
 "How far are we going back? \N{eyes} Pick a decade.",
 
-"How much time do we have on our hands? \N{watch} Do you want to watch a short, medium or long movie?",
+"How much time do we have on our hands? \N{watch} Do you want to watch a short, medium, or long movie?",
 
-"Feeling starstruck? \N{glowing star} Any actors or directors you wish to see?",
+"Feeling starstruck? \N{glowing star} Any actors or directors you knead to see?",
 
 "Anything else we should consider? The floor is yours. \N{man dancing} Think emotions, settings, tropes, plots, etc.",
 
-"I’ll stay silent for a minute now. \N{face without mouth} Stay still, I’m off to bake you the movie of your dreams. \N{clapper board}",
+"I'll now begin the movie baking process. \N{face without mouth} Stay put, I’m off to bake the perfect movie for you. \N{clapper board} Are you excited?",
 
-"The movie is fresh out of the oven! \N{bread} No need to thank me, it’s the yeast I could do. ",
+"The movie is fresh out of the oven! \N{bread} Here is my personalized recommendation. No need to thank me, it’s the yeast I can do. \N{winking face}",
 
 "I hope you love it as much as I loved talking to you. Here are my individualised, tailored recommendations.",
 
-"This is it for me. Take care, ok? "
+"This is it for me. Take care, ok?"
 ]
 question_index = 0
 question_names = ["genres", "similar_movies", "maturity", "decade", "length", "actor-director", "textbox"]
@@ -93,6 +93,8 @@ def output_process():
             completion = completion[pos:]
         else:
             completion = "none"
+        if result_list[0].lower() == "no":
+            completion = "It's okay! I'm undecisive too sometimes \N{relieved face}"
         
         if (len(user_data) == len(question_names)):
             movieURL, movieText = getMovie(user_data)
