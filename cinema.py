@@ -27,6 +27,7 @@ def take_input(moviedict):
             res.append(ia.search_movie(mov)[0]["title"])
             
     '''
+    
     if moviedict["genres"] != "no":
         yo = moviedict["genres"]
         if not nlpout[0] in moviedict["genres"]:
@@ -40,7 +41,7 @@ def take_input(moviedict):
     else:
         decadecode = 5
        
-    
+    moviecode = 1
     if moviedict["length"] != "no":
         length = moviedict["length"].strip().lower()
         if moviedict["length"] == "long" or moviedict["length"] == "longer":
