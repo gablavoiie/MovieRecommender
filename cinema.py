@@ -7,7 +7,7 @@ import pandas
 ia = Cinemagoer()
 
 
-df = pandas.read_csv("movie_data_copy.csv")
+df = pandas.read_csv("movie_data.csv")
 
 def take_input(moviedict):
     moremovies = False
@@ -72,6 +72,3 @@ def nlp(text):
         if value in t:
             tag_vector[index] = 1
     return(g,tag_vector)
-
-
-

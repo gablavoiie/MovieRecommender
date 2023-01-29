@@ -57,7 +57,7 @@ examples=[
   Example("Individualism, justice, freedom, struggle, poverty. Community town, courage and pride.", "western")
 ]
 
-#genre classifier
+# genre classifier
 
 def get_genre_prediction(input):
   r = [input]
@@ -71,10 +71,7 @@ def get_genre_prediction(input):
   except:
     return("no")
 
-
-  
-
-#get cosine similarity between input text and tag
+# get cosine similarity between input text and tag
 
 def get_similarity(input, movie):
   phrases = [input,movie]

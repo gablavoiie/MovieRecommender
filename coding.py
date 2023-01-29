@@ -20,8 +20,6 @@ def decade_coder(year):
         return 8
     elif year == "201":
         return 9
-    elif year == "202":
-        return 10
     else:
         return 1000
 
